@@ -28,11 +28,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Long userAuthorization(User user) {
         User getUser = dao.readByName(user.getEmail());
-
-        if(getUser != null && passwordEncoder
-                                .encode(user.getPassword())
-                                .equals(getUser.getPassword()))
+        String password = passwordEncoder.encode(user.getPassword());
+        System.out.printf("%s = %s", user.getPassword(), password);
+        if(getUser != null && passwordEncoder.matches(user.getPassword(), getUser.getPassword()))
         {
+            System.out.println();
             return getUser.getId();
         }
         return -1L;
