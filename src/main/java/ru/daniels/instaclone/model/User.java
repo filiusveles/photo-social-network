@@ -10,7 +10,10 @@ public class User {
     private long id;
     private String firstName;
     private String lastName;
+
     private String email;
+    private String password;
+
     private String phone;
     private String nickname;
 
@@ -37,6 +40,11 @@ public class User {
     @Column(name = "email")
     public String getEmail() {
         return email;
+    }
+
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
     }
 
     @Column(name = "phone")
@@ -69,11 +77,29 @@ public class User {
         this.email = email;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
     }
 }

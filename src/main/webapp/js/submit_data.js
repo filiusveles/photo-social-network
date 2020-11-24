@@ -1,13 +1,13 @@
 function autor(){
     event.preventDefault();
-    var username = document.getElementById("username").value;
+    var email = document.getElementById("username").value;
     var password = document.getElementById("password").value;
    $.ajax({
-       url: "welcome/login",
+       url: "/login",
        method: 'post',
        contentType: "application/json",
        data:JSON.stringify({
-            "username": username,
+            "email": email,
             "password": password
        }),
        success: function(){

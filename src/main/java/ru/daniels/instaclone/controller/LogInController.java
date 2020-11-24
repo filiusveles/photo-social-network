@@ -1,24 +1,25 @@
 package ru.daniels.instaclone.controller;
 
-
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.daniels.instaclone.model.UserAuthorization;
+import ru.daniels.instaclone.model.User;
+import ru.daniels.instaclone.service.UserService;
 
 
-@Controller
-@RequestMapping("/welcome")
+@RestController
 public class LogInController {
 
+    private UserService service;
 
-    @GetMapping
-    public String loginPage(){
-        return "welcome";
+    @Autowired
+    public void setService(UserService service) {
+        this.service = service;
     }
 
     @PostMapping(path="/login")
-    public String logIn(@RequestBody UserAuthorization authorization){
-        System.out.printf("login:%s password:%s\n", authorization.getLogin(), authorization.getPassword());
-        return "test";
+    public User logIn(@RequestBody User user){
+        Long id = service.userAuthorization(user);
+        if(id > 0) return service.findById(id);
+        return user;
     }
 }

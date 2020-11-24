@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <context:component-scan base-package="ru.daniels.instaclone"/>
     <mvc:annotation-driven/>
     <mvc:resources mapping="/script/**" location="/js/"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".html"/>
     </bean>
 
@@ -27,7 +27,6 @@
         <property name="annotatedClasses">
             <list>
                 <value>ru.daniels.instaclone.model.User</value>
-                <value>ru.daniels.instaclone.model.UserAuthorization</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -38,5 +37,27 @@
         </property>
     </bean>
 
+    <bean id="dao" class="ru.daniels.instaclone.dao.PostgreSQLDao">
+        <property name="sessionFactory" ref="hibernateSession"/>
+    </bean>
+
+    <bean id="crypto" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <constructor-arg value="12"/>
+    </bean>
+
+    <bean id="service" class="ru.daniels.instaclone.service.impl.UserServiceImpl">
+        <property name="dao" ref="dao"/>
+        <property name="passwordEncoder" ref="crypto"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernateSession"/>
+    </bean>
+
+
+
     <mvc:default-servlet-handler/>
+
 </beans>
