@@ -15,7 +15,7 @@ public class PageController {
         return "reg";
     }
 
-    @GetMapping("/welcome")
+    @GetMapping("/{nickname}")
     public String homePage(){
         return "welcome";
     }

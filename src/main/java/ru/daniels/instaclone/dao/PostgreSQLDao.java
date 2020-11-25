@@ -6,6 +6,7 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.daniels.instaclone.model.Post;
 import ru.daniels.instaclone.model.User;
 
 
@@ -48,6 +49,11 @@ public class PostgreSQLDao implements Dao {
     public long create(User user) {
         Session session = sessionFactory.getCurrentSession();
         return (Long) session.save(user);
+    }
+
+    public long createPost(Post post){
+        Session session = sessionFactory.getCurrentSession();
+        return (Long) session.save(post);
     }
 
     @Override

@@ -24,6 +24,9 @@ public class User {
     @JsonProperty("nickname")
     private String nickname;
 
+    @JsonProperty("avatar")
+    private String avatarUrl;
+
 /*    private Subscribers subscribers;*/
 
     @Id
@@ -65,9 +68,10 @@ public class User {
         return nickname;
     }
 
-/*    public Subscribers getSubscribers() {
-        return subscribers;
-    }*/
+    @Column(name = "avatar_url")
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -97,6 +101,9 @@ public class User {
         this.nickname = nickname;
     }
 
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     @Override
     public String toString() {

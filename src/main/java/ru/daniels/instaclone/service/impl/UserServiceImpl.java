@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
         String password = passwordEncoder.encode(user.getPassword());
         user.setPassword(password);
         long id = dao.create(user);
-        System.out.printf("new user id: %d", id);
         return findById(id);
     }
 
