@@ -16,10 +16,17 @@ public class LogInController {
         this.service = service;
     }
 
-    @PostMapping(path="/login")
-    public User logIn(@RequestBody User user){
+    @PostMapping(path="/log_in")
+    public String logIn(@RequestBody User user){
         Long id = service.userAuthorization(user);
-        if(id > 0) return service.findById(id);
-        return user;
+        if(id > -1) return "/welcome";
+        return "/login";
+    }
+
+    @PostMapping(path = "/register_user")
+    public String register(@RequestBody User user){
+        User newUser = service.register(user);
+        if(newUser != null) return "/welcome";
+        return "/registration";
     }
 }

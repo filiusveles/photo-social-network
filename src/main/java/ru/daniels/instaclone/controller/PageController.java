@@ -2,13 +2,21 @@ package ru.daniels.instaclone.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/welcome")
 public class PageController {
-    @GetMapping
+    @GetMapping("/login")
     public String loginPage(){
+        return "login";
+    }
+
+    @GetMapping("/registration")
+    public String registrationPage(){
+        return "reg";
+    }
+
+    @GetMapping("/welcome")
+    public String homePage(){
         return "welcome";
     }
 }

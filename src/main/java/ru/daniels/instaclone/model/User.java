@@ -1,31 +1,39 @@
 package ru.daniels.instaclone.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="users", schema = "data")
 public class User {
 
+    @JsonProperty("id")
     private long id;
+    @JsonProperty("firstname")
     private String firstName;
+    @JsonProperty("lastname")
     private String lastName;
-
+    @JsonProperty("email")
     private String email;
+    @JsonProperty("password")
     private String password;
-
+    @JsonProperty("phone")
     private String phone;
+    @JsonProperty("nickname")
     private String nickname;
 
 /*    private Subscribers subscribers;*/
 
     @Id
-    @SequenceGenerator(name="users_seq", sequenceName = "users_id_seq", allocationSize = 0)
+    @SequenceGenerator(name="user_seq", sequenceName = "data.users_id_seq", allocationSize = 0)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @Column(name = "id")
     public long getId(){
         return id;
     }
+
 
     @Column(name = "firstname")
     public String getFirstName() {

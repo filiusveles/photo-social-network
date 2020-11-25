@@ -3,7 +3,6 @@ package ru.daniels.instaclone.service.impl;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.daniels.instaclone.dao.Dao;
 import ru.daniels.instaclone.model.User;
 import ru.daniels.instaclone.service.UserService;
@@ -25,14 +24,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public Long userAuthorization(User user) {
         User getUser = dao.readByName(user.getEmail());
-        String password = passwordEncoder.encode(user.getPassword());
-        System.out.printf("%s = %s", user.getPassword(), password);
         if(getUser != null && passwordEncoder.matches(user.getPassword(), getUser.getPassword()))
         {
-            System.out.println();
             return getUser.getId();
         }
         return -1L;
@@ -45,9 +40,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        return null;
+        String password = passwordEncoder.encode(user.getPassword());
+        user.setPassword(password);
+        long id = dao.create(user);
+        System.out.printf("new user id: %d", id);
+        return findById(id);
     }
 
     @Override
