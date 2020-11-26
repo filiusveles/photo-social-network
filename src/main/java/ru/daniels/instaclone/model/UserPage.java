@@ -6,6 +6,8 @@ import java.util.List;
 
 @Entity
 public class UserPage {
+
+    private long userId;
     private String pageUrl;
     private String nickname;
     private String avatar;
@@ -41,5 +43,13 @@ public class UserPage {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

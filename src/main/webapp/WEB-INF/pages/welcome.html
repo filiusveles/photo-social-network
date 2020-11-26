@@ -8,26 +8,43 @@
 </head>
 <body>
     <div class = "user">
-        <img id="avatar">
+        <img id="avatar" th:src="@{${userPage.getAvatar()}}" alt="Avatar">
         <p class="nickname" th:text="${userPage.getNickname()}"></p>
     </div>
     <div class="posts">
         <div class="post">
-            <div>
-                <img id="image" src="#">
+            <div th:each="post: ${userPage.getPosts()}">
+                <div>
+                    <img th:src="@{${post.getImageUrl()}}" alt="Post">
+                </div>
+                <div>
+                    <label class="nickname" th:text="${userPage.getNickname()}"></label>
+                </div>
+                <div>
+                    <label id="description"></label>
+                </div>
+                <div>
+                    <label id="created_data"></label>
+                </div>
             </div>
+            <form id="create_post" action="${userPage.getNickName()}/new_post">
+                <div>
+                    <input type="file" name="image"  title="картинка">
+                </div>
+                <div>
+                    <input type="text" title="название">
+                </div>
+                <div>
+                    <input type="text" title="описание">
+                </div>
+                <div>
+                    <input type="submit" value="Сохранить">
+                </div>
+            </form>
             <div>
-                <label class="nickname" th:text="${userPage.getNickname()}"></label>
-            </div>
-
-            <div>
-                <label id="description"></label>
-            </div>
-            <div>
-                <label id="created_data"></label>
+                <button class="show_field" type="button">Добавить</button>
             </div>
         </div>
     </div>
-
 </body>
 </html>

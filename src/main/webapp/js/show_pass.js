@@ -10,3 +10,10 @@ $(document).ready(function(){
 		return false;
 	});
 });
+
+
+$(document).ready(function(){
+    $('.show_field').on('click', function(){
+        $('#create_post').style.display='block';
+    });
+})

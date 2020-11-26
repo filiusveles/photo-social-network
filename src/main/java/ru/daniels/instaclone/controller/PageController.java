@@ -33,10 +33,11 @@ public class PageController {
     public String homePage(@PathVariable("nickname") String nickname, Model model){
         User user = service.findByNickname(nickname);
         UserPage userPage = new UserPage();
+        userPage.setUserId(user.getId());
         userPage.setAvatar(user.getAvatarUrl() == null ? "#" : user.getAvatarUrl());
         userPage.setNickname(user.getNickname());
         userPage.setPageUrl("/"+ user.getNickname());
-        userPage.setPosts(null);
+        userPage.setPosts(service.getUserPosts(user.getId()));
         model.addAttribute(userPage);
         return "welcome";
     }

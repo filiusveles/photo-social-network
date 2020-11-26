@@ -46,6 +46,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>ru.daniels.instaclone.model.User</value>
+                <value>ru.daniels.instaclone.model.Post</value>
             </list>
         </property>
         <property name="hibernateProperties">

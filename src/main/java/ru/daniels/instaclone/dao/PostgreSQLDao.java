@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.daniels.instaclone.model.Post;
 import ru.daniels.instaclone.model.User;
 
-
+import java.util.List;
 
 
 @Repository
@@ -50,11 +50,21 @@ public class PostgreSQLDao implements Dao {
         Session session = sessionFactory.getCurrentSession();
         return (Long) session.save(user);
     }
-
+    @Override
+    @Transactional
     public long createPost(Post post){
         Session session = sessionFactory.getCurrentSession();
         return (Long) session.save(post);
     }
+
+    @Override
+    @Transactional
+    public List<Post> findPostsByUser(long id){
+        Session session = sessionFactory.getCurrentSession();
+        String SQL = "SELECT * FROM data.posts WHERE autor_id="+id;
+        return session.createSQLQuery(SQL).addEntity(Post.class).list();
+    }
+
 
     @Override
     @Transactional
