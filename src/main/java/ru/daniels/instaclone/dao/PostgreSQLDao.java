@@ -31,10 +31,10 @@ public class PostgreSQLDao implements Dao {
 
     @Override
     @Transactional
-    public User readByName(String name) {
+    public User readByName(String columnName, String value) {
         Session session = sessionFactory.getCurrentSession();
-        String SQL = "SELECT * FROM data.users WHERE email=";
-        Query query = session.createSQLQuery(SQL+ "'" + name + "'").addEntity(User.class);
+        String SQL = "SELECT * FROM data.users WHERE " + columnName + "=" + "'" + value + "'";
+        Query query = session.createSQLQuery(SQL).addEntity(User.class);
         return (User) query.stream().findFirst().get();
     }
 

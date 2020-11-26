@@ -4,7 +4,7 @@ import ru.daniels.instaclone.model.User;
 
 public interface Dao {
     User readById(long id);
-    User readByName(String name);
+    User readByName(String columnName, String value);
     User update(long id);
     long create(User user);
     void delete(long id);

@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long userAuthorization(User user) {
-        User getUser = dao.readByName(user.getEmail());
+        User getUser = dao.readByName("email", user.getEmail());
         if(getUser != null && passwordEncoder.matches(user.getPassword(), getUser.getPassword()))
         {
             return getUser.getId();
@@ -36,6 +36,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(long id) {
         return dao.readById(id);
+    }
+
+    @Override
+    public User findByNickname(String nickname) {
+        User user = dao.readByName("nickname", nickname);
+        if(user == null) return new User();
+        return user;
     }
 
     @Override
