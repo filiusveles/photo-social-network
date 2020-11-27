@@ -2,10 +2,10 @@ package ru.daniels.instaclone.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.daniels.instaclone.model.Image;
 import ru.daniels.instaclone.model.Post;
 import ru.daniels.instaclone.model.User;
 
@@ -59,12 +59,36 @@ public class PostgreSQLDao implements Dao {
 
     @Override
     @Transactional
+    public Post getPost(long postId) {
+        Session session = sessionFactory.getCurrentSession();
+        String SQL = "SELECT * FROM data.posts WHERE id="+postId;
+        Query<Post> query = session.createSQLQuery(SQL).addEntity(Post.class);
+        return query.stream().findFirst().get();
+    }
+
+    @Override
+    @Transactional
     public List<Post> findPostsByUser(long id){
         Session session = sessionFactory.getCurrentSession();
-        String SQL = "SELECT * FROM data.posts WHERE autor_id="+id;
+        String SQL = "SELECT * FROM data.posts WHERE author_id="+id;
         return session.createSQLQuery(SQL).addEntity(Post.class).list();
     }
 
+    @Override
+    @Transactional
+    public Long createImage(Image image) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Long) session.save(image);
+    }
+
+    @Override
+    @Transactional
+    public Image getImage(long id) {
+        Session session = sessionFactory.getCurrentSession();
+        String SQL = "SELECT * FROM data.images WHERE id=" + id;
+        Query<Image> query = session.createSQLQuery(SQL).addEntity(Image.class);
+        return query.stream().findFirst().get();
+    }
 
     @Override
     @Transactional

@@ -1,5 +1,6 @@
 package ru.daniels.instaclone.dao;
 
+import ru.daniels.instaclone.model.Image;
 import ru.daniels.instaclone.model.Post;
 import ru.daniels.instaclone.model.User;
 
@@ -14,4 +15,8 @@ public interface Dao {
 
     List<Post> findPostsByUser(long id);
     long createPost(Post post);
+    Post getPost(long postId);
+
+    Long createImage(Image image);
+    Image getImage(long id);
 }

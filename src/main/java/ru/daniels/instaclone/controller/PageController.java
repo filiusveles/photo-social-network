@@ -36,7 +36,6 @@ public class PageController {
         userPage.setUserId(user.getId());
         userPage.setAvatar(user.getAvatarUrl() == null ? "#" : user.getAvatarUrl());
         userPage.setNickname(user.getNickname());
-        userPage.setPageUrl("/"+ user.getNickname());
         userPage.setPosts(service.getUserPosts(user.getId()));
         model.addAttribute(userPage);
         return "welcome";

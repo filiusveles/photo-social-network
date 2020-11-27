@@ -14,6 +14,13 @@ $(document).ready(function(){
 
 $(document).ready(function(){
     $('.show_field').on('click', function(){
-        $('#create_post').style.display='block';
+        if($('#create_post').css('display') == 'none'){
+            $('#create_post').css('display','block');
+            $('.show_field').text('Отмена');
+        }else{
+            $('#create_post').css('display','none');
+            $('.show_field').text('Добавить');
+        }
+
     });
-})
+});

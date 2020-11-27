@@ -47,6 +47,7 @@
             <list>
                 <value>ru.daniels.instaclone.model.User</value>
                 <value>ru.daniels.instaclone.model.Post</value>
+                <value>ru.daniels.instaclone.model.Image</value>
             </list>
         </property>
         <property name="hibernateProperties">

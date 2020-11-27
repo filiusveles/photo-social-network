@@ -8,18 +8,9 @@ import java.util.List;
 public class UserPage {
 
     private long userId;
-    private String pageUrl;
     private String nickname;
     private String avatar;
     private List<Post> posts;
-
-    public String getPageUrl() {
-        return pageUrl;
-    }
-
-    public void setPageUrl(String pageUrl) {
-        this.pageUrl = pageUrl;
-    }
 
     public String getNickname() {
         return nickname;

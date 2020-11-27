@@ -4,10 +4,12 @@ package ru.daniels.instaclone.service.impl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.daniels.instaclone.dao.Dao;
+import ru.daniels.instaclone.model.Image;
 import ru.daniels.instaclone.model.Post;
 import ru.daniels.instaclone.model.User;
 import ru.daniels.instaclone.service.UserService;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -48,8 +50,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
-
     @Override
     public User register(User user) {
         String password = passwordEncoder.encode(user.getPassword());
@@ -75,6 +75,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Post createPost(Post post) {
-        return null;
+        long postId = dao.createPost(post);
+        return dao.getPost(postId);
+    }
+
+    @Override
+    public Image createImage(Image image) {
+        long id = dao.createImage(image);
+        return dao.getImage(id);
     }
 }

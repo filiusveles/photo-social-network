@@ -4,6 +4,7 @@ package ru.daniels.instaclone.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name="users", schema = "data")
@@ -26,6 +27,8 @@ public class User {
 
     @JsonProperty("avatar")
     private String avatarUrl;
+
+    private Collection<Post> posts;
 
 /*    private Subscribers subscribers;*/
 
@@ -68,9 +71,14 @@ public class User {
         return nickname;
     }
 
-    @Column(name = "avatar_url")
+    @Column(name = "avatar")
     public String getAvatarUrl() {
         return avatarUrl;
+    }
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    public Collection<Post> getPosts() {
+        return posts;
     }
 
     public void setId(long id) {
@@ -103,6 +111,10 @@ public class User {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public void setPosts(Collection<Post> posts) {
+        this.posts = posts;
     }
 
     @Override

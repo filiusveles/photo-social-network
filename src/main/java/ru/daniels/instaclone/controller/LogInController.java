@@ -4,9 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.daniels.instaclone.exceptions.AuthorizationException;
+import ru.daniels.instaclone.model.Image;
+import ru.daniels.instaclone.model.Post;
 import ru.daniels.instaclone.model.User;
 import ru.daniels.instaclone.model.UserPage;
 import ru.daniels.instaclone.service.UserService;
+
+import javax.xml.bind.DatatypeConverter;
+import java.sql.Date;
 
 
 @RestController
@@ -43,6 +48,28 @@ public class LogInController {
         throw new AuthorizationException("exception_login");
     }
 
+    @PostMapping(path="/{id}/create_post")
+    private String createPost(@PathVariable("id") long id, @RequestBody Post post){
+
+        System.out.println(post);
+
+        User user = service.findById(id);
+        Image image = new Image();
+        image.setImage(post.getBase64image());
+        post.setResultImage(service.createImage(image));
+        post.setAuthor(user);
+        post.setDate(new Date(new java.util.Date().getTime()));
+
+        System.out.println(post);
+
+        Post savedPost = service.createPost(post);
+
+        System.out.println(savedPost);
+
+        if(savedPost != null) return "ok";
+        throw new IllegalArgumentException("create post exception");
+    }
+
     //тестовый метод
     @PostMapping(path = "/register_user")
     public UserPage register(@RequestBody User user) {
@@ -51,7 +78,6 @@ public class LogInController {
             UserPage userPage = new UserPage();
             userPage.setAvatar(newUser.getAvatarUrl());
             userPage.setNickname(newUser.getNickname());
-            userPage.setPageUrl("/{nickname}");
             userPage.setPosts(null);
             return userPage;
         }

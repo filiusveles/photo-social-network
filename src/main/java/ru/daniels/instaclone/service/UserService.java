@@ -1,5 +1,6 @@
 package ru.daniels.instaclone.service;
 
+import ru.daniels.instaclone.model.Image;
 import ru.daniels.instaclone.model.Post;
 import ru.daniels.instaclone.model.User;
 
@@ -22,6 +23,8 @@ public interface UserService {
     List<Post> getUserPosts(long id);
 
     Post createPost(Post post);
+
+    Image createImage(Image image);
 
 
 }
