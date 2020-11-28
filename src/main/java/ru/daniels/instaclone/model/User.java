@@ -26,11 +26,9 @@ public class User {
     private String nickname;
 
     @JsonProperty("avatar")
-    private String avatarUrl;
+    private Image avatar;
 
     private Collection<Post> posts;
-
-/*    private Subscribers subscribers;*/
 
     @Id
     @SequenceGenerator(name="user_seq", sequenceName = "data.users_id_seq", allocationSize = 0)
@@ -39,7 +37,6 @@ public class User {
     public long getId(){
         return id;
     }
-
 
     @Column(name = "firstname")
     public String getFirstName() {
@@ -71,9 +68,10 @@ public class User {
         return nickname;
     }
 
-    @Column(name = "avatar")
-    public String getAvatarUrl() {
-        return avatarUrl;
+    @OneToOne
+    @JoinColumn(name = "avatar")
+    public Image getAvatar() {
+        return avatar;
     }
 
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
@@ -109,8 +107,8 @@ public class User {
         this.nickname = nickname;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setAvatar(Image avatar) {
+        this.avatar = avatar;
     }
 
     public void setPosts(Collection<Post> posts) {

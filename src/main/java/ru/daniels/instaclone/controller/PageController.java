@@ -34,7 +34,7 @@ public class PageController {
         User user = service.findByNickname(nickname);
         UserPage userPage = new UserPage();
         userPage.setUserId(user.getId());
-        userPage.setAvatar(user.getAvatarUrl() == null ? "#" : user.getAvatarUrl());
+        userPage.setAvatar(user.getAvatar().getImage());
         userPage.setNickname(user.getNickname());
         userPage.setPosts(service.getUserPosts(user.getId()));
         model.addAttribute(userPage);

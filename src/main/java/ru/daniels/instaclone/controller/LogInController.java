@@ -1,7 +1,6 @@
 package ru.daniels.instaclone.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.daniels.instaclone.exceptions.AuthorizationException;
 import ru.daniels.instaclone.model.Image;
@@ -10,7 +9,6 @@ import ru.daniels.instaclone.model.User;
 import ru.daniels.instaclone.model.UserPage;
 import ru.daniels.instaclone.service.UserService;
 
-import javax.xml.bind.DatatypeConverter;
 import java.sql.Date;
 
 
@@ -76,7 +74,7 @@ public class LogInController {
         User newUser = service.register(user);
         if(newUser != null) {
             UserPage userPage = new UserPage();
-            userPage.setAvatar(newUser.getAvatarUrl());
+            userPage.setAvatar(newUser.getAvatar().getImage());
             userPage.setNickname(newUser.getNickname());
             userPage.setPosts(null);
             return userPage;

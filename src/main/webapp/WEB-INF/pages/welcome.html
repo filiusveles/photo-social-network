@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <title>Добро пожаловать!</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+    <style>
+        img{
+         max-width: 200px;
+         height: auto;
+         display: block;
+        }
+    </style>
 </head>
 <body>
     <div class = "user">
-        <img id="avatar" th:src="@{${userPage.getAvatar()}}" alt="Avatar">
+        <img id="avatar" th:src="${userPage.getAvatar()}" alt="Avatar">
         <p class="nickname" th:text="${userPage.getNickname()}"></p>
     </div>
     <div class="posts">
@@ -22,6 +28,7 @@
                     <label class="nickname" th:text="${userPage.getNickname()}"></label>
                     <label id="title" th:text="${post.getTitle()}"></label>
                 </div>
+                <div>
                     <label id="created_data" th:text="${post.getDate()}"></label>
                 </div>
                 <div>
