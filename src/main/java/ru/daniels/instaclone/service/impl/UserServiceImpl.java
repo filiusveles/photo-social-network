@@ -6,10 +6,13 @@ import org.springframework.stereotype.Service;
 import ru.daniels.instaclone.dao.Dao;
 import ru.daniels.instaclone.model.Image;
 import ru.daniels.instaclone.model.Post;
+import ru.daniels.instaclone.model.Tag;
 import ru.daniels.instaclone.model.User;
 import ru.daniels.instaclone.service.UserService;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -75,13 +78,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Post createPost(Post post) {
+        post.setTags(new ArrayList<>());
         long postId = dao.createPost(post);
         return dao.getPost(postId);
+    }
+
+    @Override
+    public Post getPost(long id) {
+        return dao.getPost(id);
     }
 
     @Override
     public Image createImage(Image image) {
         long id = dao.createImage(image);
         return dao.getImage(id);
+    }
+
+    @Override
+    public void createTag(long postId, Tag tag) {
+        Post post = getPost(postId);
+        tag.setPosts(new HashSet<>());
+        tag.getPosts().add(post);
+        dao.createTag(tag);
+        post.getTags().add(tag);
+
     }
 }

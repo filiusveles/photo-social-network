@@ -5,6 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="posts", schema = "data")
@@ -22,6 +24,7 @@ public class Post {
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date date;
     private Image resultImage;
+    private List<Tag> tags;
 
 
     @Id
@@ -59,6 +62,20 @@ public class Post {
         return description;
     }
 
+    @JoinTable(name="tagmap",
+            schema = "data",
+            joinColumns = @JoinColumn(
+                    name = "post_id",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "tag_id",
+                    referencedColumnName = "tag_id")
+    )
+    @ManyToMany(fetch = FetchType.EAGER)
+    public List<Tag> getTags() {
+        return tags;
+    }
+
     @Transient
     public String getBase64image() {
         return base64image;
@@ -86,6 +103,10 @@ public class Post {
 
     public void setResultImage(Image resultImage) {
         this.resultImage = resultImage;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public void setBase64image(String base64image) {

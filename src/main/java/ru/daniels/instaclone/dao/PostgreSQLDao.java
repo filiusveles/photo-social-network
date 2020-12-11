@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.daniels.instaclone.model.Image;
 import ru.daniels.instaclone.model.Post;
+import ru.daniels.instaclone.model.Tag;
 import ru.daniels.instaclone.model.User;
 
 import java.util.List;
@@ -94,5 +95,24 @@ public class PostgreSQLDao implements Dao {
     @Transactional
     public void delete(long id) {
 
+    }
+
+    @Override
+    @Transactional
+    public Long createTag(Tag tag) {
+        Session session = sessionFactory.getCurrentSession();
+        Long id = (Long)session.save(tag);
+        Post post = tag.getPosts().stream().findFirst().get();
+        session.createSQLQuery("INSERT INTO data.tagmap VALUES (" + post.getId() + "," + id + ");");
+        return id;
+    }
+
+    @Override
+    @Transactional
+    public Tag getTag(long id) {
+        Session session = sessionFactory.getCurrentSession();
+        String SQL = "SELECT * FROM data.tag WHERE id=" + id;
+        Query<Tag> query = session.createSQLQuery(SQL).addEntity(Tag.class);
+        return query.stream().findFirst().get();
     }
 }

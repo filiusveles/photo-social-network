@@ -2,6 +2,7 @@ package ru.daniels.instaclone.dao;
 
 import ru.daniels.instaclone.model.Image;
 import ru.daniels.instaclone.model.Post;
+import ru.daniels.instaclone.model.Tag;
 import ru.daniels.instaclone.model.User;
 
 import java.util.List;
@@ -19,4 +20,8 @@ public interface Dao {
 
     Long createImage(Image image);
     Image getImage(long id);
+
+    Long createTag(Tag tag);
+    Tag getTag(long id);
+
 }

@@ -48,6 +48,7 @@
                 <value>ru.daniels.instaclone.model.User</value>
                 <value>ru.daniels.instaclone.model.Post</value>
                 <value>ru.daniels.instaclone.model.Image</value>
+                <value>ru.daniels.instaclone.model.Tag</value>
             </list>
         </property>
         <property name="hibernateProperties">

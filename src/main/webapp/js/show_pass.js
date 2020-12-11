@@ -24,3 +24,16 @@ $(document).ready(function(){
 
     });
 });
+
+$(document).ready(function(){
+    $('.show_tag_field').on('click', function(){
+        if($('#add_tag').css('display') == 'none'){
+            $('#add_tag').css('display','block');
+            $('.show_tag_field').text('Отмена');
+        }else{
+            $('#add_tag').css('display','none');
+            $('.show_tag_field').text('Добавить');
+        }
+
+    });
+});
