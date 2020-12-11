@@ -22,6 +22,8 @@ public interface Dao {
     Image getImage(long id);
 
     Long createTag(Tag tag);
+    void addNewRelationPostTag(Tag tag, Post post);
     Tag getTag(long id);
+    Tag findTagByName(String name);
 
 }

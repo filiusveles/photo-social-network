@@ -10,7 +10,9 @@ import ru.daniels.instaclone.model.Post;
 import ru.daniels.instaclone.model.Tag;
 import ru.daniels.instaclone.model.User;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -102,9 +104,16 @@ public class PostgreSQLDao implements Dao {
     public Long createTag(Tag tag) {
         Session session = sessionFactory.getCurrentSession();
         Long id = (Long)session.save(tag);
-        Post post = tag.getPosts().stream().findFirst().get();
-        session.createSQLQuery("INSERT INTO data.tagmap VALUES (" + post.getId() + "," + id + ");");
+        Post post = tag.getPosts().get(0);
+        //addNewRelationPostTag(tag, post);
         return id;
+    }
+
+    @Override
+    @Transactional
+    public void addNewRelationPostTag(Tag tag, Post post) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(post);
     }
 
     @Override
@@ -114,5 +123,17 @@ public class PostgreSQLDao implements Dao {
         String SQL = "SELECT * FROM data.tag WHERE id=" + id;
         Query<Tag> query = session.createSQLQuery(SQL).addEntity(Tag.class);
         return query.stream().findFirst().get();
+    }
+
+    @Override
+    @Transactional
+    public Tag findTagByName(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        String SQL = "SELECT * FROM data.tag WHERE name=" + "'" + name + "'";
+        Query<Tag> query = session.createSQLQuery(SQL).addEntity(Tag.class);
+        if(query.list().size() > 0) {
+            return query.list().get(0);
+        }
+        return null;
     }
 }

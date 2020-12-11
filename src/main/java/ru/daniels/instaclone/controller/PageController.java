@@ -6,10 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.daniels.instaclone.model.Post;
+import ru.daniels.instaclone.model.Tag;
 import ru.daniels.instaclone.model.User;
 import ru.daniels.instaclone.model.UserPage;
 import ru.daniels.instaclone.service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class PageController {
@@ -48,6 +53,17 @@ public class PageController {
         Post post = service.getPost(id);
         model.addAttribute(post);
         return "post";
+    }
+
+    @GetMapping("/search")
+    private String searchPostByTag(@RequestParam("tag") String tagName, Model model){
+        Tag tag = service.getTagByName(tagName);
+        if(tag == null){
+            tag = new Tag();
+            tag.setPosts(new ArrayList<>());
+        }
+        model.addAttribute(tag);
+        return "search_page";
     }
 
 }

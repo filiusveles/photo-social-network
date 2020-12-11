@@ -31,5 +31,11 @@ public interface UserService {
 
     void createTag(long postId, Tag tag);
 
+    Tag getTagByName(String name);
+
+    List<Post> getPostsByTagName(String tagName);
+
+
+
 
 }

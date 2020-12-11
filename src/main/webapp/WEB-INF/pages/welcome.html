@@ -14,6 +14,12 @@
     </style>
 </head>
 <body>
+    <header>
+        <form action="/search">
+            <input type="text" name="tag">
+            <input type="submit" value="Поиск">
+        </form>
+    </header>
     <div class = "user">
         <img id="avatar" th:src="${userPage.getAvatar()}" alt="Avatar">
         <p class="nickname" th:text="${userPage.getNickname()}"></p>

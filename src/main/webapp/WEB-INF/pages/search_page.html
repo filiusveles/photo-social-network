@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Найдено: ' + ${tag.getPosts().size()}"></title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        img{
+         max-width: 200px;
+         height: auto;
+         display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="posts">
+        <div th:each="post: ${tag.getPosts()}">
+            <div>
+                <a th:href="@{post/}+${post.getId()}">
+                    <img th:src="${post.getResultImage().getImage()}" alt="Foto">
+                </a>
+            </div>
+        </div>
+</div>
+
+</body>
+</html>

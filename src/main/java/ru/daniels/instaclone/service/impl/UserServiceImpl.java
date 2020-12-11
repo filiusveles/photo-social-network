@@ -11,8 +11,6 @@ import ru.daniels.instaclone.model.User;
 import ru.daniels.instaclone.service.UserService;
 
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -96,11 +94,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createTag(long postId, Tag tag) {
+        Tag findTag = dao.findTagByName(tag.getName());
         Post post = getPost(postId);
-        tag.setPosts(new HashSet<>());
-        tag.getPosts().add(post);
-        dao.createTag(tag);
-        post.getTags().add(tag);
+        if(findTag != null){
+            post.getTags().add(findTag);
+            dao.addNewRelationPostTag(findTag, post);
+        }else{
+            tag.setPosts(new ArrayList<>());
+            tag.getPosts().add(post);
+            dao.createTag(tag);
+        }
+    }
 
+    @Override
+    public Tag getTagByName(String name) {
+        return dao.findTagByName(name);
+    }
+
+    @Override
+    public List<Post> getPostsByTagName(String tagName) {
+        Tag tag = dao.findTagByName(tagName);
+        if(tag == null) return new ArrayList<>();
+        return tag.getPosts();
     }
 }

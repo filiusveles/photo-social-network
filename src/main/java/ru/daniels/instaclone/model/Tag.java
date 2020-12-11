@@ -3,6 +3,7 @@ package ru.daniels.instaclone.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 
@@ -12,7 +13,7 @@ public class Tag {
     private long id;
     @JsonProperty("tag")
     private String name;
-    private Set<Post> posts;
+    private List<Post> posts;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +36,8 @@ public class Tag {
                     name = "post_id",
                     referencedColumnName = "id")
     )
-    @ManyToMany
-    public Set<Post> getPosts() {
+    @ManyToMany(fetch = FetchType.EAGER)
+    public List<Post> getPosts() {
         return posts;
     }
 
@@ -48,7 +49,16 @@ public class Tag {
         this.name = name;
     }
 
-    public void setPosts(Set<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", posts=" + posts +
+                '}';
     }
 }
