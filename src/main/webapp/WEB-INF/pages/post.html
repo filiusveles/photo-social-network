@@ -5,7 +5,12 @@
     <title th:text="${post.getTitle()}"></title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
+
 <body>
+<header>
+    <div th:replace="header :: user(id=${user.getId()}, nickname=${user.getNickname()})">
+    </div>
+</header>
     <div class="image">
         <img th:src="${post.getResultImage().getImage()}">
     </div>
@@ -20,20 +25,16 @@
 
         <div class="tags">
             <div class="tag" th:if="${not post.getTags().isEmpty()}">
-<!--
-                <div th:each="tag: ${post.getTags()}">
-                    <label th:text="${tag.getName()}"></label>
-                </div>
--->
                 <label th:each="tag: ${post.getTags()}" th:text="${tag.getName()} "></label>
             </div>
-
-            <form id="add_tag" style="display:none;">
-                <input type="hidden" th:value="${post.getId()}" id="post_id">
-                <input type="text" id="tag_name">
-                <input type="submit" value="Добавить">
-            </form>
-            <button class="show_tag_field" type="button">Добавить</button>
+            <div th:if="${user.getId()} eq ${post.getAuthor().getId()}">
+                <form id="add_tag" style="display:none;">
+                    <input type="hidden" th:value="${post.getId()}" id="post_id">
+                    <input type="text" id="tag_name">
+                    <input type="submit" value="Добавить">
+                </form>
+                <button class="show_tag_field" type="button">Добавить</button>
+            </div>
         </div>
         <div>
             <label id="description" th:text="${post.getDescription()}"></label>

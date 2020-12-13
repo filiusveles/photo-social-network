@@ -1,6 +1,7 @@
 package ru.daniels.instaclone.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.daniels.instaclone.exceptions.AuthorizationException;
 import ru.daniels.instaclone.model.*;
@@ -20,11 +21,12 @@ public class LogInController {
     }
 
     @PostMapping(path="/login")
-    public String logIn(@RequestBody User user){
+    public String logIn(@RequestBody User user, Model model){
         Long id = service.userAuthorization(user);
         if(id > -1) {
             user = service.findById(id);
-            return "/"+ user.getNickname();
+            model.addAttribute(user);
+            return "/"+ user.getNickname() + "?id=" + user.getId();
         }
         throw new AuthorizationException("exception_login");
     }

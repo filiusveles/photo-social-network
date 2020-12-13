@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="user(id, nickname)">
+        <form action="/search">
+            <input type="text" name="tag">
+            <input type="hidden" name="user_id" th:value="${id}">
+            <input type="submit" value="Поиск">
+        </form>
+        <label th:text="${nickname}"></label>
+        <div th:if="${id}">
+            <a href="/login"><input type="button" value="Выход"></a>
+        </div>
+        <div th:unless="${id}">
+            <a href="/login"><input type="button" value="Войти"></a>
+            <a href="/registration"><input type="button" value="Регистрация"></a>
+        </div>
+    </div>
+</body>
+</html>

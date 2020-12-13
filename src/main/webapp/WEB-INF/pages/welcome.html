@@ -15,10 +15,8 @@
 </head>
 <body>
     <header>
-        <form action="/search">
-            <input type="text" name="tag">
-            <input type="submit" value="Поиск">
-        </form>
+        <div th:replace="header :: user(id=${user.getId()}, nickname=${user.getNickname()})">
+        </div>
     </header>
     <div class = "user">
         <img id="avatar" th:src="${userPage.getAvatar()}" alt="Avatar">
@@ -28,13 +26,20 @@
         <div class="post" th:if="${not userPage.getPosts().isEmpty()}">
             <div th:each="post: ${userPage.getPosts()}">
                 <div>
-                    <a th:href="@{post/}+${post.getId()}">
-                        <img th:src="${post.getResultImage().getImage()}" alt="Foto">
-                    </a>
+                    <div th:if="${user.getId()}">
+                        <a th:href="@{post/}+${post.getId()}+@{?id=}+${user.getId()}">
+                            <img th:src="${post.getResultImage().getImage()}" alt="Foto">
+                        </a>
+                    </div>
+                    <div th:unless="${user.getId()}">
+                        <a th:href="@{post/}+${post.getId()}">
+                            <img th:src="${post.getResultImage().getImage()}" alt="Foto">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-            <div id="dialog-form" title="Добавить фото">
+        <div id="dialog-form" title="Добавить фото" th:if="${user.getId()} eq ${userPage.getUserId()}">
                 <form id="create_post" action="/new_post" style="display:none;">
                     <input type="hidden" id="user_id" th:value="${userPage.getUserId()}">
                     <div>
