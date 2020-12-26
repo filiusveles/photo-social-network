@@ -21,16 +21,6 @@ public class PageController {
         this.service = service;
     }
 
-    @GetMapping("/login")
-    public String loginPage(){
-        return "login";
-    }
-
-    @GetMapping("/registration")
-    public String registrationPage(){
-        return "reg";
-    }
-
     @GetMapping("/{nickname}")
     public String homePage(@PathVariable("nickname") String nickname, @RequestParam(value = "id", required = false) Long userId, Model model){
         User user = service.findByNickname(nickname);
