@@ -10,6 +10,7 @@ import ru.daniels.instaclone.model.dbentity.Tag;
 import ru.daniels.instaclone.model.dbentity.User;
 import ru.daniels.instaclone.service.UserService;
 
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long userAuthorization(User user) {
-        User getUser = dao.readByName("email", user.getEmail());
+        User getUser = (User) dao.readByName("email", user.getEmail(), User.class);
         if(getUser != null && passwordEncoder.matches(user.getPassword(), getUser.getPassword()))
         {
             return getUser.getId();
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByNickname(String nickname) {
-        User user = dao.readByName("nickname", nickname);
+        User user = (User) dao.readByName("nickname", nickname, User.class);
         if(user == null) return new User();
         return user;
     }
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createTag(long postId, Tag tag) {
-        Tag findTag = dao.findTagByName(tag.getName());
+        Tag findTag = getTagByName(tag.getName());
         Post post = getPost(postId);
         if(findTag != null){
             post.getTags().add(findTag);
@@ -101,14 +102,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Tag getTagByName(String name) {
-        return dao.findTagByName(name);
-    }
-
-    @Override
     public List<Post> getPostsByTagName(String tagName) {
-        Tag tag = dao.findTagByName(tagName);
+        Tag tag = getTagByName(tagName);
         if(tag == null) return new ArrayList<>();
         return tag.getPosts();
     }
+
+    @Override
+    public Tag getTagByName(String name) {
+        return (Tag) dao.readByName("name", name, Tag.class);
+    }
+
 }

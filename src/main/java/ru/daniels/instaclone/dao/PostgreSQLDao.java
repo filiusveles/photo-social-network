@@ -15,32 +15,9 @@ import java.util.List;
 
 @Repository
 public class PostgreSQLDao<T extends DBEntity> implements Dao<T> {
-
-
     private SessionFactory sessionFactory;
-
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    @Transactional
-    public User readByName(String columnName, String value) {
-        Session session = sessionFactory.getCurrentSession();
-        String SQL = "SELECT * FROM data.users WHERE " + columnName + "=" + "'" + value + "'";
-        Query query = session.createSQLQuery(SQL).addEntity(User.class);
-        return (User) query.stream().findFirst().get();
-    }
-    @Override
-    @Transactional
-    public Tag findTagByName(String name) {
-        Session session = sessionFactory.getCurrentSession();
-        String SQL = "SELECT * FROM data.tag WHERE name=" + "'" + name + "'";
-        Query<Tag> query = session.createSQLQuery(SQL).addEntity(Tag.class);
-        if(query.list().size() > 0) {
-            return query.list().get(0);
-        }
-        return null;
     }
 
     @Override
@@ -68,6 +45,26 @@ public class PostgreSQLDao<T extends DBEntity> implements Dao<T> {
 
     @Override
     @Transactional
+    public T readByName(String columnName, String value, Class<T> entity) {
+        Session session = sessionFactory.getCurrentSession();
+        String SQL;
+        if(entity.isAssignableFrom(User.class)){
+            SQL = "SELECT * FROM data.users WHERE " + columnName + "=" + "'" + value + "'";
+        }
+        if (entity.isAssignableFrom(Tag.class)){
+            SQL = "SELECT * FROM data.tag WHERE " + columnName + "=" + "'" + value + "'";
+        }else {
+            throw new IllegalArgumentException();
+        }
+        Query query = session.createSQLQuery(SQL).addEntity(entity);
+        if(query.list().size() > 0) {
+            return (T) query.list().get(0);
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional
     public List<Post> findPostsByUser(long id){
         Session session = sessionFactory.getCurrentSession();
         String SQL = "SELECT * FROM data.posts WHERE author_id="+id;
@@ -86,7 +83,4 @@ public class PostgreSQLDao<T extends DBEntity> implements Dao<T> {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(post);
     }
-
-
-
 }
