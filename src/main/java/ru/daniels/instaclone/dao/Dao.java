@@ -1,29 +1,22 @@
 package ru.daniels.instaclone.dao;
 
-import ru.daniels.instaclone.model.Image;
-import ru.daniels.instaclone.model.Post;
-import ru.daniels.instaclone.model.Tag;
-import ru.daniels.instaclone.model.User;
+import ru.daniels.instaclone.model.dbentity.DBEntity;
+import ru.daniels.instaclone.model.dbentity.Post;
+import ru.daniels.instaclone.model.dbentity.Tag;
+import ru.daniels.instaclone.model.dbentity.User;
 
 import java.util.List;
 
-public interface Dao {
-    User readById(long id);
+public interface Dao<T extends DBEntity> {
+
     User readByName(String columnName, String value);
     User update(long id);
-    long create(User user);
-    void delete(long id);
 
+    T read(long id, Class<T> entity);
+    T create(T entity);
+    void delete(long id, Class<T > entity);
     List<Post> findPostsByUser(long id);
-    long createPost(Post post);
-    Post getPost(long postId);
-
-    Long createImage(Image image);
-    Image getImage(long id);
-
-    Long createTag(Tag tag);
     void addNewRelationPostTag(Tag tag, Post post);
-    Tag getTag(long id);
     Tag findTagByName(String name);
 
 }

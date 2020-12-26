@@ -1,4 +1,4 @@
-package ru.daniels.instaclone.model;
+package ru.daniels.instaclone.model.dbentity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -6,11 +6,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="posts", schema = "data")
-public class Post {
+public class Post implements DBEntity {
 
     private long id;
     @JsonProperty("image")

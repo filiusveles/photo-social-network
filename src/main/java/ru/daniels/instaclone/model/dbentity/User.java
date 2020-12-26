@@ -1,4 +1,4 @@
-package ru.daniels.instaclone.model;
+package ru.daniels.instaclone.model.dbentity;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,8 +8,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name="users", schema = "data")
-public class User {
-
+public class User implements DBEntity {
     @JsonProperty("id")
     private long id;
     @JsonProperty("firstname")
@@ -113,5 +112,12 @@ public class User {
 
     public void setPosts(Collection<Post> posts) {
         this.posts = posts;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                '}';
     }
 }

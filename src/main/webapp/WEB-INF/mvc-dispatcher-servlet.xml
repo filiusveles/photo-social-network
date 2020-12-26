@@ -45,10 +45,10 @@
         <property name="dataSource" ref="db"/>
         <property name="annotatedClasses">
             <list>
-                <value>ru.daniels.instaclone.model.User</value>
-                <value>ru.daniels.instaclone.model.Post</value>
-                <value>ru.daniels.instaclone.model.Image</value>
-                <value>ru.daniels.instaclone.model.Tag</value>
+                <value>ru.daniels.instaclone.model.dbentity.User</value>
+                <value>ru.daniels.instaclone.model.dbentity.Post</value>
+                <value>ru.daniels.instaclone.model.dbentity.Image</value>
+                <value>ru.daniels.instaclone.model.dbentity.Tag</value>
             </list>
         </property>
         <property name="hibernateProperties">

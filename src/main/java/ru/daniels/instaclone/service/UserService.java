@@ -1,9 +1,9 @@
 package ru.daniels.instaclone.service;
 
-import ru.daniels.instaclone.model.Image;
-import ru.daniels.instaclone.model.Post;
-import ru.daniels.instaclone.model.Tag;
-import ru.daniels.instaclone.model.User;
+import ru.daniels.instaclone.model.dbentity.Image;
+import ru.daniels.instaclone.model.dbentity.Post;
+import ru.daniels.instaclone.model.dbentity.Tag;
+import ru.daniels.instaclone.model.dbentity.User;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ public interface UserService {
 
     User findByNickname(String nickname);
 
-    User register(User user);
+    User createUser(User user);
 
-    User updateUser(long id);
+/*    User updateUser(long id);
 
-    void deleteUser(long id);
+    void deleteUser(long id);*/
 
     List<Post> getUserPosts(long id);
 

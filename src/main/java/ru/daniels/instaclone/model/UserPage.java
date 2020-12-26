@@ -1,6 +1,8 @@
 package ru.daniels.instaclone.model;
 
 
+import ru.daniels.instaclone.model.dbentity.Post;
+
 import javax.persistence.Entity;
 import java.util.List;
 

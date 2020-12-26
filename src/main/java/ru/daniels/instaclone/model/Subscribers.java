@@ -1,12 +1,14 @@
 package ru.daniels.instaclone.model;
 
+import ru.daniels.instaclone.model.dbentity.User;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Subscribers {
     private long id;
-    private final HashMap<Long,User> subscribers;
+    private final HashMap<Long, User> subscribers;
 
     public Subscribers(){
         subscribers = new HashMap<>();

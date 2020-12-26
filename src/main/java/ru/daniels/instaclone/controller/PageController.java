@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.daniels.instaclone.model.*;
+import ru.daniels.instaclone.model.dbentity.Post;
+import ru.daniels.instaclone.model.dbentity.Tag;
+import ru.daniels.instaclone.model.dbentity.User;
 import ru.daniels.instaclone.service.UserService;
 
 import java.util.ArrayList;

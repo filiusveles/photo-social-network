@@ -1,11 +1,11 @@
-package ru.daniels.instaclone.model;
+package ru.daniels.instaclone.model.dbentity;
 
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="images", schema = "data")
-public class Image {
+public class Image implements DBEntity {
     private long id;
     private String image;
 
@@ -28,5 +28,12 @@ public class Image {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id=" + id +
+                '}';
     }
 }

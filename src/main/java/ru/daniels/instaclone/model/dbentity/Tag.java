@@ -1,15 +1,14 @@
-package ru.daniels.instaclone.model;
+package ru.daniels.instaclone.model.dbentity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
 @Table(name="tag", schema = "data")
-public class Tag {
+public class Tag implements DBEntity {
     private long id;
     @JsonProperty("tag")
     private String name;

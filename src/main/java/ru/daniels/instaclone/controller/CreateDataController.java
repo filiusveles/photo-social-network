@@ -1,10 +1,11 @@
 package ru.daniels.instaclone.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.daniels.instaclone.exceptions.AuthorizationException;
-import ru.daniels.instaclone.model.*;
+import ru.daniels.instaclone.model.dbentity.Image;
+import ru.daniels.instaclone.model.dbentity.Post;
+import ru.daniels.instaclone.model.dbentity.Tag;
+import ru.daniels.instaclone.model.dbentity.User;
 import ru.daniels.instaclone.service.UserService;
 
 import java.sql.Date;

@@ -4,10 +4,10 @@ package ru.daniels.instaclone.service.impl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.daniels.instaclone.dao.Dao;
-import ru.daniels.instaclone.model.Image;
-import ru.daniels.instaclone.model.Post;
-import ru.daniels.instaclone.model.Tag;
-import ru.daniels.instaclone.model.User;
+import ru.daniels.instaclone.model.dbentity.Image;
+import ru.daniels.instaclone.model.dbentity.Post;
+import ru.daniels.instaclone.model.dbentity.Tag;
+import ru.daniels.instaclone.model.dbentity.User;
 import ru.daniels.instaclone.service.UserService;
 
 import java.util.ArrayList;
@@ -15,11 +15,8 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-
     private Dao dao;
     private BCryptPasswordEncoder passwordEncoder;
-
 
     public void setDao(Dao dao) {
         this.dao = dao;
@@ -41,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(long id) {
-        return dao.readById(id);
+        return (User) dao.read(id, User.class);
     }
 
     @Override
@@ -51,15 +48,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
-    public User register(User user) {
-        String password = passwordEncoder.encode(user.getPassword());
-        user.setPassword(password);
-        long id = dao.create(user);
-        return findById(id);
-    }
-
-    @Override
+/*    @Override
     public User updateUser(long id) {
         return null;
     }
@@ -67,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(long id) {
 
-    }
+    }*/
 
     @Override
     public List<Post> getUserPosts(long id) {
@@ -75,21 +64,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Post createPost(Post post) {
-        post.setTags(new ArrayList<>());
-        long postId = dao.createPost(post);
-        return dao.getPost(postId);
+    public User createUser(User user) {
+        String password = passwordEncoder.encode(user.getPassword());
+        user.setPassword(password);
+        return (User) dao.create(user);
     }
 
     @Override
-    public Post getPost(long id) {
-        return dao.getPost(id);
+    public Post createPost(Post post) {
+        post.setTags(new ArrayList<>());
+        return (Post) dao.create(post);
     }
 
     @Override
     public Image createImage(Image image) {
-        long id = dao.createImage(image);
-        return dao.getImage(id);
+        return (Image) dao.create(image);
     }
 
     @Override
@@ -102,8 +91,13 @@ public class UserServiceImpl implements UserService {
         }else{
             tag.setPosts(new ArrayList<>());
             tag.getPosts().add(post);
-            dao.createTag(tag);
+            dao.create(tag);
         }
+    }
+
+    @Override
+    public Post getPost(long id) {
+        return (Post) dao.read(id, Post.class);
     }
 
     @Override
