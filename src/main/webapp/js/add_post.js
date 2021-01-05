@@ -1,10 +1,9 @@
-document.getElementById('create_post').addEventListener('submit', submitForm);
+document.getElementById('create_post').addEventListener('submit', submitPost);
 
 
-function submitForm(event) {
+function submitPost(event) {
     // Отменяем стандартное поведение браузера с отправкой формы
     event.preventDefault();
-
     var image = document.getElementById('image').files;
     var title = document.getElementById('post_title').value;
     var description = document.getElementById('send_description').value;
@@ -13,14 +12,12 @@ function submitForm(event) {
     if(image.length > 0){
         getBase64(image[0], function(result){
             data = {"post_title":title,"description":description,"image":result};
-            sub(data);
+            sendPost(data);
         });
     }
-
-
 }
 
-function sub(data){
+function sendPost(data){
     var page = document.getElementById('user_id').value;
     var sendPage = "/" + page + "/create_post"
 

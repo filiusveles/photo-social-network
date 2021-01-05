@@ -31,7 +31,6 @@ public class PostgreSQLDao<T extends DBEntity> implements Dao<T> {
     public T create(T entity) {
         Session session = sessionFactory.getCurrentSession();
         session.save(entity);
-        System.out.println("entity: " + entity);
         return entity;
     }
 
@@ -39,7 +38,6 @@ public class PostgreSQLDao<T extends DBEntity> implements Dao<T> {
     @Transactional
     public T read(long id, Class<T> entity) {
         Session session = sessionFactory.getCurrentSession();
-        System.out.println("entity: " + entity);
         return session.get(entity, id);
     }
 
@@ -50,8 +48,7 @@ public class PostgreSQLDao<T extends DBEntity> implements Dao<T> {
         String SQL;
         if(entity.isAssignableFrom(User.class)){
             SQL = "SELECT * FROM data.users WHERE " + columnName + "=" + "'" + value + "'";
-        }
-        if (entity.isAssignableFrom(Tag.class)){
+        }else if (entity.isAssignableFrom(Tag.class)){
             SQL = "SELECT * FROM data.tag WHERE " + columnName + "=" + "'" + value + "'";
         }else {
             throw new IllegalArgumentException();

@@ -13,6 +13,8 @@ import ru.daniels.instaclone.model.dbentity.User;
 import ru.daniels.instaclone.service.UserService;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 @Controller
 public class PageController {
 
@@ -46,7 +48,7 @@ public class PageController {
     }
 
     @GetMapping("/search")
-    private String searchPostByTag(@RequestParam("tag") String tagName, @RequestParam(value = "user_id", required = false) Long id, Model model){
+    private String searchPostByTag(@RequestParam("tag") String tagName, @RequestParam(value = "userId", required = false) Long id, Model model){
         Tag tag = service.getTagByName(tagName);
         if(tag == null){
             tag = new Tag();

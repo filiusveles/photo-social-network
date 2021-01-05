@@ -8,30 +8,27 @@
 <body>
 <div class="_LoginIn">
     <form action="/login" id="loginForm">
-        <div class="_Value">
+        <div>
             <label class="login">
-            <span class="hint">Ваш логин</span>
-            <input id="email" type="text" name="email" value="user@user.ru">
-        </label>
+                <span class="hint">Ваш логин</span>
+                <input id="email" type="text" name="email" value="user@user.ru">
+            </label>
         </div>
-        <div class="_Value">
+        <div>
             <label class="password">
                 <span class="hint">Пароль</span>
                 <input id="password" type="password" class="show_input_pass" name="password" value="user">
             </label>
-            <div class="Show">
+            <div>
                 <button class="showPass" type="button">Показать</button>
             </div>
         </div>
-        <div class="send_btn">
+        <div>
             <input type="submit" value="Войти"/>
         </div>
     </form>
-    <form action="/registration">
-        <div class="reg">
-            <button>Регистрация</button>
-        </div>
-    </form>
+    <a href="/registration"><button>Регистрация</button></a>
+
 </div>
 <script type="text/javascript" src="/script/show_pass.js"></script>
 <script type="text/javascript" src="/script/submit_data.js"></script>

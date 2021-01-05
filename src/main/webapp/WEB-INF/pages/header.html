@@ -4,7 +4,7 @@
     <div th:fragment="user(id, nickname)">
         <form action="/search">
             <input type="text" name="tag">
-            <input type="hidden" name="user_id" th:value="${id}">
+            <input type="hidden" name="userId" th:value="${id}">
             <input type="submit" value="Поиск">
         </form>
         <label th:text="${nickname}"></label>
