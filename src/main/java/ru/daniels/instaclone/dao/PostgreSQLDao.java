@@ -9,6 +9,7 @@ import ru.daniels.instaclone.model.dbentity.DBEntity;
 import ru.daniels.instaclone.model.dbentity.Post;
 import ru.daniels.instaclone.model.dbentity.Tag;
 import ru.daniels.instaclone.model.dbentity.User;
+import ru.daniels.instaclone.security.SecUser;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class PostgreSQLDao<T extends DBEntity> implements Dao<T> {
     public T readByName(String columnName, String value, Class<T> entity) {
         Session session = sessionFactory.getCurrentSession();
         String SQL;
-        if(entity.isAssignableFrom(User.class)){
+        if(entity.isAssignableFrom(User.class) || entity.isAssignableFrom(SecUser.class)){
             SQL = "SELECT * FROM data.users WHERE " + columnName + "=" + "'" + value + "'";
         }else if (entity.isAssignableFrom(Tag.class)){
             SQL = "SELECT * FROM data.tag WHERE " + columnName + "=" + "'" + value + "'";

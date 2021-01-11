@@ -9,8 +9,6 @@ import ru.daniels.instaclone.model.dbentity.Post;
 import ru.daniels.instaclone.model.dbentity.Tag;
 import ru.daniels.instaclone.model.dbentity.User;
 import ru.daniels.instaclone.service.UserService;
-
-import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
