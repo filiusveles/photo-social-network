@@ -16,15 +16,25 @@ function submitForm(event) {
             'Content-Type': 'application/json',
         },
     });
-    // Отправляем (асинхронно!)
     fetch(request).then(
         function(response) {
-            response.text().then(function(text){
-                document.location.href=text;
+            response.json().then(function(json){
+                header
+                /*fetch("/" + json.nickname, {
+                        method: 'GET',
+                        headers: {
+                            Authentication: "Bearer " + json.jwtToken,
+                        }
+                })
+                .then(response => {
+                    if(response.redirected){
+                        document.location = response.url;
+                    }
+                }
+                );*/
             });
         },
         function(error) {
-            // Запрос не получилось отправить
             console.error(error);
         }
     );
