@@ -17,7 +17,7 @@ public class Image implements DBEntity {
         return id;
     }
 
-    @Column(name="image_64")
+    @Column(name="image_filename")
     public String getImage() {
         return image;
     }

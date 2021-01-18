@@ -1,6 +1,7 @@
 package ru.daniels.instaclone.api.model.dbentity;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.daniels.instaclone.api.security.SecUser;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -13,10 +14,10 @@ public class Post implements DBEntity {
     private long id;
     private String title;
     private String description;
-    private User author;
+    private SecUser author;
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date date;
-    private Image resultImage;
+    private Image image;
     private List<Tag> tags;
 
 
@@ -30,14 +31,14 @@ public class Post implements DBEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
-    public User getAuthor() {
+    public SecUser getAuthor() {
         return author;
     }
 
     @OneToOne
     @JoinColumn(name = "image_id")
     public Image getResultImage() {
-        return resultImage;
+        return image;
     }
 
     @Column(name = "created_data")
@@ -73,7 +74,7 @@ public class Post implements DBEntity {
         this.id = id;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(SecUser author) {
         this.author = author;
     }
 
@@ -89,8 +90,8 @@ public class Post implements DBEntity {
         this.description = description;
     }
 
-    public void setResultImage(Image resultImage) {
-        this.resultImage = resultImage;
+    public void setResultImage(Image image) {
+        this.image = image;
     }
 
     public void setTags(List<Tag> tags) {
@@ -104,7 +105,7 @@ public class Post implements DBEntity {
                 ", description='" + description + '\'' +
                 ", author=" + author +
                 ", date=" + date +
-                ", resultImage=" + resultImage +
+                ", resultImage=" + image +
                 '}';
     }
 }

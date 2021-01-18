@@ -30,13 +30,9 @@ public interface UserService {
 
     Image createImage(Image image);
 
-    void createTag(long postId, Tag tag);
+    void createTag(long postId, String tag);
 
     Tag getTagByName(String name);
 
     List<PostView> getPostsByTagName(String tagName);
-
-
-
-
 }

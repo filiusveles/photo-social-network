@@ -10,7 +10,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import ru.daniels.instaclone.api.model.dbentity.Image;
 import ru.daniels.instaclone.api.model.dbentity.Post;
@@ -23,8 +22,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
-@EnableWebMvc
-@ComponentScan(basePackages = "ru.daniels.instaclone.api")
+@ComponentScan("ru.daniels.instaclone.api")
 public class DBConfiguration {
     private Environment environment;
 

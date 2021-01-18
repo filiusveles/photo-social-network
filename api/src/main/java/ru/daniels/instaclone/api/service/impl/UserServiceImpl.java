@@ -3,6 +3,8 @@ package ru.daniels.instaclone.api.service.impl;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import ru.daniels.instaclone.api.configuration.Constants;
 import ru.daniels.instaclone.api.dao.Dao;
 import ru.daniels.instaclone.api.model.PostView;
 import ru.daniels.instaclone.api.model.dbentity.Image;
@@ -10,6 +12,7 @@ import ru.daniels.instaclone.api.model.dbentity.Post;
 import ru.daniels.instaclone.api.model.dbentity.Tag;
 import ru.daniels.instaclone.api.model.dbentity.User;
 import ru.daniels.instaclone.api.service.UserService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,13 +75,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createTag(long postId, Tag tag) {
-        Tag findTag = getTagByName(tag.getName());
+    public void createTag(long postId, String tagName) {
+        Tag tag = getTagByName(tagName);
         Post post = (Post) dao.read(postId, Post.class);
-        if(findTag != null){
-            post.getTags().add(findTag);
-            dao.addNewRelationPostTag(findTag, post);
+        if(tag != null){
+            post.getTags().add(tag);
+            dao.addNewRelationPostTag(tag, post);
         }else{
+            tag = new Tag();
+            tag.setName(tagName);
             tag.setPosts(new ArrayList<>());
             tag.getPosts().add(post);
             dao.create(tag);
@@ -104,7 +109,6 @@ public class UserServiceImpl implements UserService {
         return (Tag) dao.readByName("name", name, Tag.class);
     }
 
-
     private List<PostView> convertPostListToPostViewsList(List<Post> posts){
         List<PostView> postViews = new ArrayList<>();
         posts.forEach(post -> {
@@ -116,8 +120,11 @@ public class UserServiceImpl implements UserService {
     private PostView convertPostToPostView(Post post){
         return PostView
                 .builder()
-                    .setImage(post.getResultImage().getImage())
+                    .setId(post.getId())
+                    .setTitle(post.getTitle())
+                    .setImage("/media/" + Constants.IMAGES_FOLDER + post.getResultImage().getImage())
                     .setAuthor(post.getAuthor().getNickname())
+                    .setCreatedDate(post.getDate())
                     .setDescription(post.getDescription())
                     .setTags(post.getTags()
                             .stream()

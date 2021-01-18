@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.daniels.instaclone.api.configuration.Constants;
 import ru.daniels.instaclone.api.model.*;
 import ru.daniels.instaclone.api.model.dbentity.User;
 import ru.daniels.instaclone.api.service.UserService;
@@ -22,11 +23,11 @@ public class PageController {
     }
 
     @GetMapping("/{nickname}")
-    public ResponseEntity <UserPageView>homePage(@PathVariable("nickname") String nickname){
+    public ResponseEntity<UserPageView> homePage(@PathVariable("nickname") String nickname){
         User user = service.findByNickname(nickname);
         UserPageView userPageView = new UserPageView();
         userPageView.setUserId(user.getId());
-        userPageView.setAvatar(user.getAvatar().getImage());
+        userPageView.setAvatar("/media/" + Constants.IMAGES_FOLDER + user.getAvatar().getImage());
         userPageView.setNickname(user.getNickname());
         userPageView.setPosts(service.getUserPosts(user.getId()));
         return new ResponseEntity<>(userPageView, HttpStatus.OK);

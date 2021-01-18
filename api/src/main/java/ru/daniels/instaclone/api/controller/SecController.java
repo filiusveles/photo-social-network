@@ -12,7 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.client.RestClientResponseException;
+import ru.daniels.instaclone.api.configuration.Constants;
 import ru.daniels.instaclone.api.model.Profile;
 import ru.daniels.instaclone.api.security.AuthRequest;
 import ru.daniels.instaclone.api.security.AuthResponse;
@@ -49,7 +50,7 @@ public class SecController {
             logger.info("authenticated: {}", authentication.getPrincipal());
         }catch (BadCredentialsException ex){
             logger.error("Wrong login or password: {}", request);
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong login or password", ex);
+            throw new IllegalArgumentException("Wrong login or password");
         }
         String jwt = jwtTokenUtils.getToken((UserDetails) authentication.getPrincipal());
         logger.info("jwt token: {}", jwt);
@@ -62,14 +63,15 @@ public class SecController {
     }
 
     private Profile createProfile(SecUser user){
-        return Profile.builder()
-                .setId(user.getId())
-                .setEmail(user.getEmail())
-                .setNickname(user.getNickname())
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setAvatar(user.getAvatar().getImage())
-                .setPhone(user.getPhone())
+        return Profile
+                .builder()
+                    .setId(user.getId())
+                    .setEmail(user.getEmail())
+                    .setNickname(user.getNickname())
+                    .setFirstName(user.getFirstName())
+                    .setLastName(user.getLastName())
+                    .setAvatar("/media/" + Constants.IMAGES_FOLDER + user.getAvatar().getImage())
+                    .setPhone(user.getPhone())
                 .build();
     }
 }
