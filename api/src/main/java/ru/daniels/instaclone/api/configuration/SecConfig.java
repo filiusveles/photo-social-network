@@ -44,7 +44,8 @@ public class SecConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/media/**");
+                .antMatchers(HttpMethod.GET,"/media/**")
+                .antMatchers(HttpMethod.GET,"/script/**", "/css/**");
     }
 
     @Override
@@ -53,10 +54,8 @@ public class SecConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().exceptionHandling();
         http
                 .authorizeRequests()
-                    .antMatchers("/script/**").permitAll()
-                    .antMatchers("/css/**").permitAll()
                     .antMatchers(HttpMethod.POST,"/api/login").permitAll()
-                    //.antMatchers("/login").permitAll()
+                    .antMatchers("/registration", "/login").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()

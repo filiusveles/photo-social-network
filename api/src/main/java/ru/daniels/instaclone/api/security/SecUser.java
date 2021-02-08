@@ -35,7 +35,7 @@ public class SecUser implements DBEntity, UserDetails {
     private String lastName;
 
     @Column(name = "email")
-    @Getter
+    @Getter @Setter
     private String email;
 
     @Column(name = "password")

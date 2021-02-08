@@ -13,23 +13,31 @@ import java.util.List;
 
 @NoArgsConstructor
 public class PostView {
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long id;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String title;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String author;
-    @Getter @Setter
-    private String image;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String description;
-    @Getter @Setter
+    @Getter
+    @Setter
     private List<String> tags;
     @DateTimeFormat(pattern = "dd.MM.yyyy")
-    @Getter @Setter
+    @Getter
+    @Setter
     private Date createdDate;
+    @Getter
+    @Setter
+    private String image;
+
     @JsonIgnore
-    public static PostView.PostVewBuilder builder(){
+    public static PostView.PostVewBuilder builder() {
         return new PostView.PostVewBuilder();
     }
 
@@ -44,7 +52,7 @@ public class PostView {
         this.title = title;
     }
 
-    public static class PostVewBuilder{
+    public static class PostVewBuilder {
         private String author = "";
         private String image = "";
         private String description = "";
@@ -88,7 +96,7 @@ public class PostView {
             return this;
         }
 
-        public PostView build(){
+        public PostView build() {
             return new PostView(author, image, description, tags, id, createdDate, title);
         }
     }

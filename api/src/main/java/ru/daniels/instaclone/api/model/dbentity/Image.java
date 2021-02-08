@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name="images", schema = "data")
 public class Image implements DBEntity {
     private long id;
-    private String image;
+    private String imageURL;
 
     @Id
     @SequenceGenerator(name="images_seq", sequenceName = "data.images_id_seq", allocationSize = 0)
@@ -18,16 +18,16 @@ public class Image implements DBEntity {
     }
 
     @Column(name="image_filename")
-    public String getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageURL(String image) {
+        this.imageURL = image;
     }
 
     @Override

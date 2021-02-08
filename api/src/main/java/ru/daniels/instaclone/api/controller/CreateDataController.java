@@ -1,9 +1,12 @@
 package ru.daniels.instaclone.api.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.daniels.instaclone.api.configuration.Constants;
 import ru.daniels.instaclone.api.model.PostView;
 import ru.daniels.instaclone.api.model.dbentity.Image;
 import ru.daniels.instaclone.api.model.dbentity.Post;
@@ -19,6 +22,8 @@ public class CreateDataController {
 
     private UserService service;
 
+    private static final Logger lOGGER = LoggerFactory.getLogger(CreateDataController.class);
+
     @Autowired
     public void setService(UserService service) {
         this.service = service;
@@ -28,19 +33,25 @@ public class CreateDataController {
     private ResponseEntity<HttpStatus> createPost(@PathVariable("nickname") String nickname, @RequestBody PostView newPost){
         SecUser currentUser = SecController.getAuthUser();
         if(!currentUser.getNickname().equals(nickname)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        lOGGER.info("Start save: {}'s post {}", currentUser, newPost);
         Image image = new Image();
-        image.setImage(newPost.getImage());
+        image.setImageURL(Constants.IMAGES_FOLDER +
+                currentUser.getId() +
+                "/" +
+                Constants.convertAndGetImageName(newPost.getImage())
+        );
+        lOGGER.info("Image path after convert to md5: {}", image.getImageURL());
         Post post = new Post();
         post.setAuthor(currentUser);
         post.setDate(new Date(new java.util.Date().getTime()));
         post.setTitle(newPost.getTitle());
-        post.setResultImage(service.createImage(image));
+        post.setImage(service.createImage(image));
         post.setDescription(newPost.getDescription());
         post.setTags(new ArrayList<>());
-
         if(service.createPost(post) == null){
             new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
+        lOGGER.info("Created post: {}", post);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -37,7 +37,7 @@ public class Post implements DBEntity {
 
     @OneToOne
     @JoinColumn(name = "image_id")
-    public Image getResultImage() {
+    public Image getImage() {
         return image;
     }
 
@@ -90,7 +90,7 @@ public class Post implements DBEntity {
         this.description = description;
     }
 
-    public void setResultImage(Image image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

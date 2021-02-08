@@ -27,7 +27,7 @@ public class PageController {
         User user = service.findByNickname(nickname);
         UserPageView userPageView = new UserPageView();
         userPageView.setUserId(user.getId());
-        userPageView.setAvatar("/media/" + Constants.IMAGES_FOLDER + user.getAvatar().getImage());
+        userPageView.setAvatar("/media/" + Constants.IMAGES_FOLDER + user.getAvatar().getImageURL());
         userPageView.setNickname(user.getNickname());
         userPageView.setPosts(service.getUserPosts(user.getId()));
         return new ResponseEntity<>(userPageView, HttpStatus.OK);

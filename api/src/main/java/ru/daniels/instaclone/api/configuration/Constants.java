@@ -7,14 +7,15 @@ import org.springframework.util.DigestUtils;
 import ru.daniels.instaclone.api.controller.SecController;
 import ru.daniels.instaclone.api.security.SecUser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 
 @Component
 public class Constants {
     public final static String IMAGES_FOLDER = "images/";
+    public final static Long DEFAULT_IMAGE_ID = 1L;
+    public final static String URL = "127.0.0.1:8080/";
+    public final static String MEDIA_URL = URL + "media/";
 
     public static String convertAndGetImageName(String base64Image){
         return convertToFIle(base64Image).getName();
@@ -43,5 +44,11 @@ public class Constants {
                e.printStackTrace();
         }
         return file;
+    }
+
+    public static void createUserDir(Long userId){
+        ClassLoader loader = Constants.class.getClassLoader();
+        new File(loader.getResource("images").getFile(), userId + "")
+                .mkdir();
     }
 }

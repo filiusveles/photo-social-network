@@ -11,6 +11,7 @@ import ru.daniels.instaclone.api.model.dbentity.Image;
 import ru.daniels.instaclone.api.model.dbentity.Post;
 import ru.daniels.instaclone.api.model.dbentity.Tag;
 import ru.daniels.instaclone.api.model.dbentity.User;
+import ru.daniels.instaclone.api.security.SecUser;
 import ru.daniels.instaclone.api.service.UserService;
 
 import java.util.ArrayList;
@@ -28,13 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long userAuthorization(User user) {
-        User getUser = (User) dao.readByName("email", user.getEmail(), User.class);
-        if(getUser != null && passwordEncoder.matches(user.getPassword(), getUser.getPassword()))
-        {
-            return getUser.getId();
-        }
-        return -1L;
+    public SecUser findByEmail(String email){
+        return (SecUser) dao.readByName("email", email, SecUser.class);
     }
 
     @Override
@@ -44,9 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByNickname(String nickname) {
-        User user = (User) dao.readByName("nickname", nickname, User.class);
-        if(user == null) return new User();
-        return user;
+        return (User) dao.readByName("nickname", nickname, User.class);
     }
 
     @Override
@@ -57,10 +51,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
+    public SecUser createUser(SecUser user) {
         String password = passwordEncoder.encode(user.getPassword());
         user.setPassword(password);
-        return (User) dao.create(user);
+        return (SecUser) dao.create(user);
     }
 
     @Override
@@ -109,6 +103,11 @@ public class UserServiceImpl implements UserService {
         return (Tag) dao.readByName("name", name, Tag.class);
     }
 
+    @Override
+    public Image getImage(Long id) {
+        return (Image) dao.read(id, Image.class);
+    }
+
     private List<PostView> convertPostListToPostViewsList(List<Post> posts){
         List<PostView> postViews = new ArrayList<>();
         posts.forEach(post -> {
@@ -122,7 +121,7 @@ public class UserServiceImpl implements UserService {
                 .builder()
                     .setId(post.getId())
                     .setTitle(post.getTitle())
-                    .setImage("/media/" + Constants.IMAGES_FOLDER + post.getResultImage().getImage())
+                    .setImage(Constants.MEDIA_URL + Constants.IMAGES_FOLDER + post.getImage().getImageURL())
                     .setAuthor(post.getAuthor().getNickname())
                     .setCreatedDate(post.getDate())
                     .setDescription(post.getDescription())

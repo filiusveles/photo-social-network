@@ -5,18 +5,20 @@ import ru.daniels.instaclone.api.model.dbentity.Image;
 import ru.daniels.instaclone.api.model.dbentity.Post;
 import ru.daniels.instaclone.api.model.dbentity.Tag;
 import ru.daniels.instaclone.api.model.dbentity.User;
+import ru.daniels.instaclone.api.security.SecUser;
 
 import java.util.List;
 
 public interface UserService {
 
-    Long userAuthorization(User user);
 
     User findById(long id);
 
     User findByNickname(String nickname);
 
-    User createUser(User user);
+    SecUser findByEmail(String email);
+
+    SecUser createUser(SecUser user);
 
 /*    User updateUser(long id);
 
@@ -29,6 +31,8 @@ public interface UserService {
     PostView getPost(long id);
 
     Image createImage(Image image);
+
+    Image getImage(Long id);
 
     void createTag(long postId, String tag);
 

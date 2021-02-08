@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClientResponseException;
 import ru.daniels.instaclone.api.configuration.Constants;
 import ru.daniels.instaclone.api.model.Profile;
 import ru.daniels.instaclone.api.security.AuthRequest;
@@ -70,7 +69,7 @@ public class SecController {
                     .setNickname(user.getNickname())
                     .setFirstName(user.getFirstName())
                     .setLastName(user.getLastName())
-                    .setAvatar("/media/" + Constants.IMAGES_FOLDER + user.getAvatar().getImage())
+                    .setAvatar("/media/" + Constants.IMAGES_FOLDER + user.getAvatar().getImageURL())
                     .setPhone(user.getPhone())
                 .build();
     }
